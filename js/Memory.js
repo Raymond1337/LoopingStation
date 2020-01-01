@@ -1,12 +1,13 @@
 export default class Memory{	
 
-	constructor(_outputFilter){
+	constructor(_inputFilter, _outputFilter){
 		console.log("Memory instantiated");
 		//AudioAPI this.soundfile
 		// create UI
 		this.createUI();
 		this.volumen = 1;
 		this.outputFilter = _outputFilter; //Get outputfilter from Loopstation
+		this.inputFilter = _inputFilter;
 	}
 	
 	recordSound(){}
@@ -31,15 +32,22 @@ export default class Memory{
 		const clipContainer = document.createElement('article');
 		const clipLabel = document.createElement('p');
 		const audio = document.createElement('audio');
-		const deleteButton = document.createElement('button');
+		const recordButton = document.createElement('Button');
+		const playButton = document.createElement('Button');
+		const deleteButton = document.createElement('Button');
 			   
-		clipContainer.classList.add('clip');
+		clipContainer.classList.add('memoryUnit'); 
+		clipContainer.classList.add('floatLeft');
 		audio.setAttribute('controls', '');
+		recordButton.innerHTML = "Record";
+		playButton.innerHTML = "Play";
 		deleteButton.innerHTML = "Reset";
 		clipLabel.innerHTML = clipName;
 
 		clipContainer.appendChild(clipLabel);
-		clipContainer.appendChild(audio);
+		//clipContainer.appendChild(audio);
+		clipContainer.appendChild(recordButton);
+		clipContainer.appendChild(playButton);
 		clipContainer.appendChild(deleteButton);
 		soundClips.appendChild(clipContainer);
 

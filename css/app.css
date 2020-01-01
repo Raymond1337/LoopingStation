@@ -108,6 +108,22 @@ footer div {
     margin: 0px auto;
 }
 
+.floatLeft{
+	float: left;
+}
+
+.floatRight{
+	float: right;
+}
+
+.memory{
+	align : center;
+}
+
+.memoryUnit{
+	margin : 10px;
+}
+
 @media (max-width: 920px) {
     .videoContainer {
         width: 48%;
