@@ -1,9 +1,10 @@
 export default class Memory{	
 
-	constructor(_inputFilter, _outputFilter){
+	constructor(_name, _inputFilter, _outputFilter){
 		console.log("Memory instantiated");
 		//AudioAPI this.soundfile
 		// create UI
+		this.name = _name;
 		this.createUI();
 		this.volumen = 1;
 		this.outputFilter = _outputFilter; //Get outputfilter from Loopstation
@@ -27,14 +28,16 @@ export default class Memory{
 		let chunks = [];
 		
 		const soundClips = document.querySelector('.memory');
-		const clipName = 'memory'
+		const clipName = 'memory ' + this.name;
 
 		const clipContainer = document.createElement('article');
 		const clipLabel = document.createElement('p');
 		const audio = document.createElement('audio');
+		const lineBreak = document.createElement('br');
 		const recordButton = document.createElement('Button');
 		const playButton = document.createElement('Button');
 		const deleteButton = document.createElement('Button');
+		const volumeSlider = document.createElement('Input');
 			   
 		clipContainer.classList.add('memoryUnit'); 
 		clipContainer.classList.add('floatLeft');
@@ -42,6 +45,7 @@ export default class Memory{
 		recordButton.innerHTML = "Record";
 		playButton.innerHTML = "Play";
 		deleteButton.innerHTML = "Reset";
+		volumeSlider.setAttribute('type' , 'range')
 		clipLabel.innerHTML = clipName;
 
 		clipContainer.appendChild(clipLabel);
@@ -49,6 +53,8 @@ export default class Memory{
 		clipContainer.appendChild(recordButton);
 		clipContainer.appendChild(playButton);
 		clipContainer.appendChild(deleteButton);
+		clipContainer.appendChild(lineBreak);
+		clipContainer.appendChild(volumeSlider);
 		soundClips.appendChild(clipContainer);
 
 		const blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });

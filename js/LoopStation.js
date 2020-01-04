@@ -5,6 +5,7 @@ import LSOutput from './LSOutput.js';
 import Timer from './Timer.js';
 import MidiAPI from './MidiAPI.js';
 import Memory from './Memory.js';
+import FilterList from './FilterList.js';
 
 export default class LoopStation{
 	memoryArray = [];
@@ -12,14 +13,14 @@ export default class LoopStation{
 		console.log("LoopStation instantiated");
 		// Singleton pattern
 		var lSOutput = new LSOutput();
-		var outputFilter = new OutputFilter(lSOutput);
-		var inputFilter = new InputFilter(outputFilter);
-		var filter = [];
+		var filterList = new FilterList();
+		var outputFilter = new OutputFilter(lSOutput, filterList);
+		var inputFilter = new InputFilter(outputFilter, filterList);
 		var lSInput = new LSInput(inputFilter);
 		
 		// Create Memory units
 		for(var count = 0; count < amountOfMemoryUnits; count++){
-			this.memoryArray.push(new Memory(inputFilter, outputFilter));
+			this.memoryArray.push(new Memory(count + 1, inputFilter, outputFilter));
 		}
 		
 		var timer = new Timer(this.memoryArray[0]);
