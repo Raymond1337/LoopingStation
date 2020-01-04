@@ -42,7 +42,7 @@ header div {
 
 main {
     padding: 5px;
-    max-width: 1000px;
+    max-width: 1200px;
     position: relative;
     margin: 0px auto;
 }
@@ -124,6 +124,9 @@ footer div {
 
 .memoryUnit{
 	margin : 10px;
+	padding: 0.01em 16px;
+	border: 1px solid #ccc !important;
+	border-radius: 6px;
 }
 
 @media (max-width: 920px) {
