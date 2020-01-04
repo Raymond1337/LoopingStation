@@ -24,16 +24,18 @@ export default class OutputFilter{
 		const soundClips = document.querySelector('.outputFilter');
 		const lableText = 'Output Filter'
 
-		const filterContainer = document.createElement('article');
+		const container = document.createElement('article');
 		const filterComboBox = document.createElement('select');
 		const label = document.createElement('p');
 		const audio = document.createElement('audio');
+		const sliderLabel = document.createElement('p');
 		const lineBreak = document.createElement('br');
 		const volumeSlider = document.createElement('Input');
 			   
-		filterContainer.classList.add('clip');
+		container.classList.add('clip');
 		audio.setAttribute('controls', '');
 		label.innerHTML = lableText;
+		sliderLabel.innerHTML = "Strength";
 		volumeSlider.setAttribute('type' , 'range');
 		
 		for(var index = 0; index < this.filterList.getFilterNames().length; index++){
@@ -43,10 +45,11 @@ export default class OutputFilter{
 			filterComboBox.appendChild(filterComboBoxOption);
 		}
 
-		filterContainer.appendChild(label);
-		filterContainer.appendChild(filterComboBox);
-		soundClips.appendChild(filterContainer);
-		filterContainer.appendChild(lineBreak);
-		filterContainer.appendChild(volumeSlider);
+		container.appendChild(label);
+		container.appendChild(filterComboBox);
+		soundClips.appendChild(container);
+		container.appendChild(sliderLabel);
+		//container.appendChild(lineBreak);
+		container.appendChild(volumeSlider);
 	}
 }
