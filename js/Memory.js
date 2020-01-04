@@ -36,6 +36,7 @@ export default class Memory{
 		const lineBreak = document.createElement('br');
 		const recordButton = document.createElement('Button');
 		const playButton = document.createElement('Button');
+		const editButton = document.createElement('Button');
 		const deleteButton = document.createElement('Button');
 		const sliderLabel = document.createElement('p');
 		const volumeSlider = document.createElement('Input');
@@ -44,7 +45,8 @@ export default class Memory{
 		container.classList.add('floatLeft');
 		audio.setAttribute('controls', '');
 		recordButton.innerHTML = "Record";
-		playButton.innerHTML = "Play";
+		playButton.innerHTML = "&#9658; / &#10074;&#10074;";
+		editButton.innerHTML = "Edit";
 		deleteButton.innerHTML = "Reset";
 		sliderLabel.innerHTML = "Volume";
 		volumeSlider.setAttribute('type' , 'range')
@@ -54,6 +56,7 @@ export default class Memory{
 		//container.appendChild(audio);
 		container.appendChild(recordButton);
 		container.appendChild(playButton);
+		container.appendChild(editButton);
 		container.appendChild(deleteButton);
 		container.appendChild(sliderLabel);
 		//container.appendChild(lineBreak);

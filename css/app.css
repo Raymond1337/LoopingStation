@@ -129,6 +129,14 @@ footer div {
 	border-radius: 6px;
 }
 
+select {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+}
+
 @media (max-width: 920px) {
     .videoContainer {
         width: 48%;
