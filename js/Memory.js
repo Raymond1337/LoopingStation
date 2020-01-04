@@ -14,7 +14,7 @@ export default class Memory{
 	recordSound(){}
 	deleteFile(){}
 	playSound(){}
-	stopSount(){}
+	stopSound(){}
 	
 	setVolumen(volumenInPercent){
 		if(volumenInPercent < 0 || volumenInPercent > 1){
@@ -47,7 +47,7 @@ export default class Memory{
 		recordButton.innerHTML = "Record";
 		playButton.innerHTML = "&#9658; / &#10074;&#10074;";
 		editButton.innerHTML = "Edit";
-		deleteButton.innerHTML = "Reset";
+		deleteButton.innerHTML = "Clear";
 		sliderLabel.innerHTML = "Volume";
 		volumeSlider.setAttribute('type' , 'range')
 		clipLabel.innerHTML = clipName;

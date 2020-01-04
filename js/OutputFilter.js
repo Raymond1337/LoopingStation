@@ -22,7 +22,7 @@ export default class OutputFilter{
 	
 	createUI(){
 		const soundClips = document.querySelector('.outputFilter');
-		const lableText = 'Output Filter'
+		const lableText = 'Edit Filter'
 
 		const container = document.createElement('article');
 		const filterComboBox = document.createElement('select');
