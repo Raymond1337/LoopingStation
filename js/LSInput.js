@@ -62,6 +62,7 @@ export default class LSInput{
 	}
 	
 	startRecord(){
+		alert('rec start');
 		this.mediaRecorder.start();
 	}
 	

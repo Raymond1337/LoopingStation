@@ -20,7 +20,11 @@ export default class LoopStation{
 		
 		// Create Memory units
 		for(var count = 0; count < amountOfMemoryUnits; count++){
-			this.memoryArray.push(new Memory(count + 1, inputFilter, outputFilter));
+			var timerString = '';
+			if(count == 0){
+				timerString = ' / Clock';
+			}
+			this.memoryArray.push(new Memory(count + 1 + timerString, lSInput, outputFilter)); //LSinput needs to be input filter
 		}
 		
 		var timer = new Timer(this.memoryArray[0]);

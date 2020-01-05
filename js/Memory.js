@@ -1,20 +1,35 @@
 export default class Memory{	
-
-	constructor(_name, _inputFilter, _outputFilter){
+	//blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+	//chunks = [];
+	//audioURL = window.URL.createObjectURL(blob);
+	//audio.src = audioURL;
+	constructor(_name, _inputFilter, _outputFilter, _reference){
 		console.log("Memory instantiated");
 		//AudioAPI this.soundfile
 		// create UI
+		
 		this.name = _name;
-		this.createUI();
 		this.volumen = 1;
 		this.outputFilter = _outputFilter; //Get outputfilter from Loopstation
 		this.inputFilter = _inputFilter;
+		this.memory;
+		this.createUI();
 	}
 	
-	recordSound(){}
-	deleteFile(){}
-	playSound(){}
+	record(){
+		console.log("record pressed");
+		this.inputFilter.startRecord();
+	}
+	
+	playSound(){
+	}
+	
 	stopSound(){}
+	
+	deleteFile(){
+		console.log("clear pressed");
+		this.memory = this.inputFilter.endRecordAndReceiveClip();
+	}
 	
 	setVolumen(volumenInPercent){
 		if(volumenInPercent < 0 || volumenInPercent > 1){
@@ -28,7 +43,7 @@ export default class Memory{
 		let chunks = [];
 		
 		const soundClips = document.querySelector('.memory');
-		const clipName = 'memory ' + this.name;
+		const clipName = 'Memory ' + this.name;
 
 		const container = document.createElement('article');
 		const clipLabel = document.createElement('p');
@@ -45,11 +60,13 @@ export default class Memory{
 		container.classList.add('floatLeft');
 		audio.setAttribute('controls', '');
 		recordButton.innerHTML = "Record";
+		recordButton.addEventListener("click", this.record.bind(this));
 		playButton.innerHTML = "&#9658; / &#10074;&#10074;";
 		editButton.innerHTML = "Edit";
 		deleteButton.innerHTML = "Clear";
+		deleteButton.addEventListener("click", this.deleteFile.bind(this));
 		sliderLabel.innerHTML = "Volume";
-		volumeSlider.setAttribute('type' , 'range')
+		volumeSlider.setAttribute('type' , 'range');
 		clipLabel.innerHTML = clipName;
 
 		container.appendChild(clipLabel);
@@ -63,10 +80,6 @@ export default class Memory{
 		container.appendChild(volumeSlider);
 		soundClips.appendChild(container);
 
-		const blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-		chunks = [];
-		const audioURL = window.URL.createObjectURL(blob);
-		audio.src = audioURL;
 		console.log("created Memory UI");
 	}
 }
