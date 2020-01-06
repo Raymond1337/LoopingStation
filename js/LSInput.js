@@ -1,8 +1,9 @@
 export default class LSInput{
 	chunks = [];
 	mediaRecorder;
-	constructor(_inputFilter, stream){
+	constructor(_inputFilter){
 		console.log("LSInput instantiated");
+		this._stream
 		// Allow recording via microphone / system input
 		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 		    console.log('getUserMedia supported.');
@@ -10,48 +11,35 @@ export default class LSInput{
 		    navigator.mediaDevices.getUserMedia ({audio: true})
 				// Success callback
 				.then(function(stream) {
-					// Create Recorder
-					this.mediaRecorder = new MediaRecorder(stream);	
-					this.mediaRecorder.ondataavailable = function(e) {
-						chunks.push(e.data);
-					}
-					this.volumen = 1;
-					this.inputFilter = _inputFilter;
-							
-					this.mediaRecorder.onstop = function(e) {
-						console.log("recorder stopped");
-
-						const clipName = prompt('Enter a name for your sound clip');
-
-						const clipContainer = document.createElement('article');
-						const clipLabel = document.createElement('p');
-						const audio = document.createElement('audio');
-						const deleteButton = document.createElement('button');
-							   
-						clipContainer.classList.add('clip');
-						audio.setAttribute('controls', '');
-						deleteButton.innerHTML = "Delete";
-						clipLabel.innerHTML = clipName;
-
-						clipContainer.appendChild(audio);
-						clipContainer.appendChild(clipLabel);
-						clipContainer.appendChild(deleteButton);
-						soundClips.appendChild(clipContainer);
-
-						const blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-						chunks = [];
-						const audioURL = window.URL.createObjectURL(blob);
-						audio.src = audioURL;
-					}
-			  })
-			  // Error callback
-			  .catch(function(err) {
-				 console.log('The following getUserMedia error occured: ' + err);
-			  }
+					console.log(this);
+					this.createMediaRecorder(_inputFilter, stream);
+				}.bind(this))
+				// Error callback
+				.catch(function(err) {
+					console.log('The following getUserMedia error occured: ' + err);
+				}
 		    );
 		} else {
 		   console.log('getUserMedia not supported on your browser!');
 		}
+	}
+	
+	createMediaRecorder(_inputFilter, stream){
+		// Create Recorder
+		this.mediaRecorder = new MediaRecorder(stream);
+		//Exeption was thrown
+		this.mediaRecorder.ondataavailable = function(e) {
+			this.chunks.push(e.data);
+		}.bind(this);
+		this.volumen = 1;
+		this.inputFilter = _inputFilter;
+				
+		this.mediaRecorder.onstop = function(e) {
+			console.log("recorder stopped");
+			//this.chunks = [];
+		}.bind(this);
+		
+		console.log('MediaRecorder enabled and allowed');
 	}
 	
 	setVolumen(volumenInPercent){
@@ -62,12 +50,14 @@ export default class LSInput{
 	}
 	
 	startRecord(){
-		alert('rec start');
 		this.mediaRecorder.start();
 	}
 	
 	endRecordAndReceiveClip(){
+		var blob = new Blob(this.chunks, { 'type' : 'audio/ogg; codecs=opus' });
+		const audioURL = window.URL.createObjectURL(blob);
 		this.mediaRecorder.stop();
-		return this.chunks;
+		console.log(blob);
+		return audioURL;
 	}	
 }

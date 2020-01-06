@@ -1,8 +1,5 @@
 export default class Memory{	
-	//blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-	//chunks = [];
-	//audioURL = window.URL.createObjectURL(blob);
-	//audio.src = audioURL;
+
 	constructor(_name, _inputFilter, _outputFilter, _reference){
 		console.log("Memory instantiated");
 		//AudioAPI this.soundfile
@@ -12,7 +9,8 @@ export default class Memory{
 		this.volumen = 1;
 		this.outputFilter = _outputFilter; //Get outputfilter from Loopstation
 		this.inputFilter = _inputFilter;
-		this.memory;
+		this.memoryURL;
+		this.audio;
 		this.createUI();
 	}
 	
@@ -22,13 +20,18 @@ export default class Memory{
 	}
 	
 	playSound(){
+		console.log("play pressed");
+		//var blobURL = window.URL.createObjectURL();
+		this.audio.play();
 	}
 	
 	stopSound(){}
 	
 	deleteFile(){
 		console.log("clear pressed");
-		this.memory = this.inputFilter.endRecordAndReceiveClip();
+		this.memoryURL = this.inputFilter.endRecordAndReceiveClip();
+		this.audio = new Audio(this.memoryURL);
+		console.log(this.audio);
 	}
 	
 	setVolumen(volumenInPercent){
@@ -62,6 +65,7 @@ export default class Memory{
 		recordButton.innerHTML = "Record";
 		recordButton.addEventListener("click", this.record.bind(this));
 		playButton.innerHTML = "&#9658; / &#10074;&#10074;";
+		playButton.addEventListener("click", this.playSound.bind(this));
 		editButton.innerHTML = "Edit";
 		deleteButton.innerHTML = "Clear";
 		deleteButton.addEventListener("click", this.deleteFile.bind(this));
