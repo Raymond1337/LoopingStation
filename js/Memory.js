@@ -77,6 +77,15 @@ export default class Memory{
 		this.audio = new Audio(audioURL);
 		console.log(this.audio);
 	}
+
+	pressPlayPauseButton(){
+		if(!this.isPlaying){
+			this.playSound();
+		}else{
+			this.stopSound();
+		}
+		this.isPlaying = !this.isPlaying ;
+	}
 	
 	createUI(){
 		const soundClips = document.querySelector('.memory');
