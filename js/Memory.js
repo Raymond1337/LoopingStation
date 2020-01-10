@@ -59,8 +59,7 @@ export default class Memory{
 	}
 	
 	deleteFile(){
-		console.log("clear pressed");
-		this.inputFilter.endRecordAndReceiveClip(this);
+		this.audio = null;
 	}
 	
 	setVolumen(volumenInPercent){
