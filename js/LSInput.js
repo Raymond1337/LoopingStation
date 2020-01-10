@@ -1,6 +1,7 @@
 export default class LSInput{
 	chunks = [];
 	mediaRecorder;
+	receiver;
 	constructor(_inputFilter){
 		console.log("LSInput instantiated");
 		this._stream
@@ -29,14 +30,20 @@ export default class LSInput{
 		this.mediaRecorder = new MediaRecorder(stream);
 		//Exeption was thrown
 		this.mediaRecorder.ondataavailable = function(e) {
-			this.chunks.push(e.data);
+			console.log('pushing data to chunks');
+			this.chunks.push(e.data);		
+			var blob = new Blob(this.chunks, { 'type' : 'audio/ogg; codecs=opus' });
+			console.log(blob);
+			console.log('sending Blob');
+			this.receiver.reciveBlob(blob);
+			console.log('clear Chunks');
+			this.chunks = [];
 		}.bind(this);
 		this.volumen = 1;
 		this.inputFilter = _inputFilter;
 				
 		this.mediaRecorder.onstop = function(e) {
 			console.log("recorder stopped");
-			//this.chunks = [];
 		}.bind(this);
 		
 		console.log('MediaRecorder enabled and allowed');
@@ -53,11 +60,8 @@ export default class LSInput{
 		this.mediaRecorder.start();
 	}
 	
-	endRecordAndReceiveClip(){
-		var blob = new Blob(this.chunks, { 'type' : 'audio/ogg; codecs=opus' });
-		const audioURL = window.URL.createObjectURL(blob);
+	endRecordAndReceiveClip(memory){
+		this.receiver = memory;
 		this.mediaRecorder.stop();
-		console.log(blob);
-		return audioURL;
 	}	
 }

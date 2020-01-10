@@ -2,14 +2,14 @@ export default class Memory{
 
 	constructor(_name, _inputFilter, _outputFilter, _reference){
 		console.log("Memory instantiated");
-		//AudioAPI this.soundfile
+		// AudioAPI this.soundfile
 		// create UI
 		
 		this.name = _name;
 		this.volumen = 1;
 		this.outputFilter = _outputFilter; //Get outputfilter from Loopstation
 		this.inputFilter = _inputFilter;
-		this.memoryURL;
+		this.blob;
 		this.audio;
 		this.createUI();
 	}
@@ -21,7 +21,6 @@ export default class Memory{
 	
 	playSound(){
 		console.log("play pressed");
-		//var blobURL = window.URL.createObjectURL();
 		this.audio.play();
 	}
 	
@@ -29,9 +28,7 @@ export default class Memory{
 	
 	deleteFile(){
 		console.log("clear pressed");
-		this.memoryURL = this.inputFilter.endRecordAndReceiveClip();
-		this.audio = new Audio(this.memoryURL);
-		console.log(this.audio);
+		this.inputFilter.endRecordAndReceiveClip(this);
 	}
 	
 	setVolumen(volumenInPercent){
@@ -41,10 +38,16 @@ export default class Memory{
 		this.volumen = volumenInPercent;
 	}
 	
+	reciveBlob(_blob){
+		console.log("Blob received");
+		console.log(_blob);
+		this.blob = _blob;
+		const audioURL = window.URL.createObjectURL(this.blob);
+		this.audio = new Audio(audioURL);
+		console.log(this.audio);
+	}
+	
 	createUI(){
-		// chunks defined for debugging
-		let chunks = [];
-		
 		const soundClips = document.querySelector('.memory');
 		const clipName = 'Memory ' + this.name;
 
