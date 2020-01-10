@@ -12,6 +12,8 @@ export default class Memory{
 		this.blob;
 		this.audio;
 		this.createUI();
+		this.isRecording = false;
+		this.isPlaying = false;
 	}
 	
 	record(){
@@ -24,7 +26,37 @@ export default class Memory{
 		this.audio.play();
 	}
 	
-	stopSound(){}
+	stopSound(){
+		console.log("stop pressed");
+		this.audio.pause();
+	}
+
+	stopRecord(){
+		console.log("clear pressed");
+		this.inputFilter.endRecordAndReceiveClip(this);
+	}
+	
+	setTimer(timer){
+		timer.setClock(audio.duration);
+	}
+	
+	reciveBlob(_blob){
+		console.log("Blob received");
+		console.log(_blob);
+		this.blob = _blob;
+		const audioURL = window.URL.createObjectURL(this.blob);
+		this.audio = new Audio(audioURL);
+		console.log(this.audio);
+	}
+	
+	pressRecordButton(){
+		if(!this.isRecording){
+			this.record();
+		}else{
+			this.stopRecord();
+		}
+		this.isRecording = !this.isRecording ;
+	}
 	
 	deleteFile(){
 		console.log("clear pressed");
@@ -38,7 +70,7 @@ export default class Memory{
 		this.volumen = volumenInPercent;
 	}
 	
-	reciveBlob(_blob){
+	receiveBlob(_blob){
 		console.log("Blob received");
 		console.log(_blob);
 		this.blob = _blob;
@@ -66,9 +98,9 @@ export default class Memory{
 		container.classList.add('floatLeft');
 		audio.setAttribute('controls', '');
 		recordButton.innerHTML = "Record";
-		recordButton.addEventListener("click", this.record.bind(this));
+		recordButton.addEventListener("click", this.pressRecordButton.bind(this));
 		playButton.innerHTML = "&#9658; / &#10074;&#10074;";
-		playButton.addEventListener("click", this.playSound.bind(this));
+		playButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
 		editButton.innerHTML = "Edit";
 		deleteButton.innerHTML = "Clear";
 		deleteButton.addEventListener("click", this.deleteFile.bind(this));
@@ -77,7 +109,6 @@ export default class Memory{
 		clipLabel.innerHTML = clipName;
 
 		container.appendChild(clipLabel);
-		//container.appendChild(audio);
 		container.appendChild(recordButton);
 		container.appendChild(playButton);
 		container.appendChild(editButton);
