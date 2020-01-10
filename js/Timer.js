@@ -1,5 +1,5 @@
 export default class Timer{
-	constructor(firstMemory, memory){
+	constructor(firstMemory, _memories){
 		console.log("Timer instantiated");
 		this.referenceMemory = firstMemory;
 		this.memories = _memories;
