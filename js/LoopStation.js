@@ -27,7 +27,7 @@ export default class LoopStation{
 			this.memoryArray.push(new Memory(count + 1 + timerString, lSInput, outputFilter)); //LSinput needs to be input filter
 		}
 		
-		var timer = new Timer(this.memoryArray[0]);
+		var timer = new Timer(this.memoryArray[0], this.memoryArray);
 		var midiAPI = new MidiAPI();		
 	}
 }
