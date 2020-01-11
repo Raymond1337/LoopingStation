@@ -2,9 +2,7 @@ export default class Memory{
 
 	constructor(_name, _inputFilter, _outputFilter, _reference){
 		console.log("Memory instantiated");
-		// AudioAPI this.soundfile
-		// create UI
-		
+		this.loopstation;
 		this.name = _name;
 		this.volumen = 1;
 		this.outputFilter = _outputFilter; //Get outputfilter from Loopstation
@@ -22,12 +20,14 @@ export default class Memory{
 	}
 	
 	playSound(){
-		console.log("play pressed");
+		//console.log("play pressed");
+		if(this.audio == null){return;}
 		this.audio.play();
 	}
 	
 	stopSound(){
-		console.log("stop pressed");
+		//console.log("stop pressed");
+		if(this.audio == null){return;}
 		this.audio.pause();
 	}
 
@@ -40,13 +40,23 @@ export default class Memory{
 		timer.setClock(audio.duration);
 	}
 	
+	setLoopstation(_loopstation){
+		console.log("LS reference set to:");
+		console.log(_loopstation);
+		this.loopstation = _loopstation;
+	}
+	
 	reciveBlob(_blob){
 		console.log("Blob received");
 		console.log(_blob);
 		this.blob = _blob;
 		const audioURL = window.URL.createObjectURL(this.blob);
 		this.audio = new Audio(audioURL);
-		console.log(this.audio);
+		
+		if(this == this.loopstation.memoryArray[0]){
+			console.log(this.audio.duration);
+			this.loopstation.timer.setClock(this.audio.duration);
+		}
 	}
 	
 	pressRecordButton(){
