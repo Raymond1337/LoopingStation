@@ -6,8 +6,8 @@ export default class Timer{
 		this.interval;
 		
 		//TODO: remove
-		console.log(this.memories);
-		this.setClock(8000);
+		//console.log(this.memories);
+		//this.setClock(8000);
 	}
 
 	cancel(){

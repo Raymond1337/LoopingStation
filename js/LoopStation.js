@@ -9,9 +9,9 @@ import FilterList from './FilterList.js';
 
 export default class LoopStation{
 	memoryArray = [];
+	timer;
+	
 	constructor(amountOfMemoryUnits){
-		console.log("LoopStation instantiated");
-		// Singleton pattern
 		var lSOutput = new LSOutput();
 		var filterList = new FilterList();
 		var outputFilter = new OutputFilter(lSOutput, filterList);
@@ -25,9 +25,16 @@ export default class LoopStation{
 				timerString = ' / Clock';
 			}
 			this.memoryArray.push(new Memory(count + 1 + timerString, lSInput, outputFilter)); //LSinput needs to be input filter
+			this.memoryArray[count].setLoopstation(this);
 		}
 		
-		var timer = new Timer(this.memoryArray[0], this.memoryArray);
-		var midiAPI = new MidiAPI();		
+		this.timer = new Timer(this.memoryArray[0], this.memoryArray);
+		var midiAPI = new MidiAPI();	
+
+		console.log("LoopStation instantiated");		
+	}
+	
+	resetLoopstation(){
+		instance = null;
 	}
 }
