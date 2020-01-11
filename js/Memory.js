@@ -87,7 +87,7 @@ export default class Memory{
 			console.log('Stop sound');
 		}
 		this.isPlaying = !this.isPlaying;
-		var icon = $('#' + this.name.replace(" / Clock", ""));
+		var icon = $('#' + 'play' + this.name.replace(" / CLOCK", ""));
 		icon.toggleClass('active');
 	}
 	
@@ -97,7 +97,6 @@ export default class Memory{
 		const container = document.createElement('article');
 		const clipLabel = document.createElement('p');
 		const audio = document.createElement('audio');
-		const lineBreak = document.createElement('br');
 		const recordButton = document.createElement('Button');
 		const playPauseButton = document.createElement('a');
 		const editButton = document.createElement('Button');
@@ -108,19 +107,20 @@ export default class Memory{
 		container.classList.add('memoryUnit'); 
 		container.classList.add('floatLeft');
 		audio.setAttribute('controls', '');
+		clipLabel.setAttribute('style', "font-family:verdana");
+		clipLabel.setAttribute('style', "font-weight: bold");
+		clipLabel.innerHTML = clipName;
 		recordButton.innerHTML = "Record";
 		recordButton.addEventListener("click", this.pressRecordButton.bind(this));
 		playPauseButton.setAttribute('class', 'play');
-		playPauseButton.setAttribute('id', this.name.replace(' / Clock', '')); //remove all Blankspace for the id name
+		playPauseButton.setAttribute('id', 'play' + this.name.replace(' / CLOCK', '')); //remove all Blankspace for the id name
 		playPauseButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
 		editButton.innerHTML = "Edit";
 		deleteButton.innerHTML = "Clear";
 		deleteButton.addEventListener("click", this.deleteFile.bind(this));
 		sliderLabel.innerHTML = "Volume";
 		volumeSlider.setAttribute('type' , 'range');
-		clipLabel.setAttribute('style', "font-family:verdana");
-		clipLabel.setAttribute('style', "font-weight: bold");
-		clipLabel.innerHTML = clipName;
+		volumeSlider.setAttribute('class', 'volumeSlider');
 
 		container.appendChild(clipLabel);
 		container.appendChild(playPauseButton);
@@ -128,7 +128,6 @@ export default class Memory{
 		container.appendChild(editButton);
 		container.appendChild(deleteButton);
 		container.appendChild(sliderLabel);
-		//container.appendChild(lineBreak);
 		container.appendChild(volumeSlider);
 		soundClips.appendChild(container);
 

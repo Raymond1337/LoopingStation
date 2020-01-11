@@ -23,6 +23,7 @@ export default class Timer{
 	
 	runAllMemories(){
 		console.log('trying to run memories');
+		console.log('memory length' + this.memories.length)
 		for (var index = 0; index < this.memories.length; index++){
 			this.memories[index].stopSound();
 			this.memories[index].playSound();	

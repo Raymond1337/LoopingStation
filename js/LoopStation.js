@@ -5,10 +5,13 @@ import LSOutput from './LSOutput.js';
 import Timer from './Timer.js';
 import MidiAPI from './MidiAPI.js';
 import Memory from './Memory.js';
+import DynamicMemory from './DynamicMemory.js';
 import FilterList from './FilterList.js';
 
 export default class LoopStation{
 	memoryArray = [];
+	numberOfMemories = 0;
+
 	constructor(amountOfMemoryUnits){
 		console.log("LoopStation instantiated");
 		// Singleton pattern
@@ -17,15 +20,21 @@ export default class LoopStation{
 		var outputFilter = new OutputFilter(lSOutput, filterList);
 		var inputFilter = new InputFilter(outputFilter, filterList);
 		var lSInput = new LSInput(inputFilter);
-		
-		// Create Memory units
-		for(var count = 0; count < amountOfMemoryUnits; count++){
+		this.numberOfMemories = amountOfMemoryUnits;
+
+		// Create standard Memory units
+		// Code bei Create dynamic Memory unit bitte auch anpassen wenn ihr was ändert.
+		for (var count = 0; count < amountOfMemoryUnits; count++){
 			var timerString = '';
 			if(count == 0){
-				timerString = ' / Clock';
+				timerString = ' / CLOCK';
 			}
 			this.memoryArray.push(new Memory(count + 1 + timerString, lSInput, outputFilter)); //LSinput needs to be input filter
 		}
+
+		// Create dynamic Memory unit
+
+		new DynamicMemory(this.memoryArray, amountOfMemoryUnits, lSInput, outputFilter); //LSinput needs to be input filter
 		
 		var timer = new Timer(this.memoryArray[0], this.memoryArray);
 		var midiAPI = new MidiAPI();		
