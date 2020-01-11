@@ -81,44 +81,50 @@ export default class Memory{
 	pressPlayPauseButton(){
 		if(!this.isPlaying){
 			this.playSound();
+			console.log('Play sound');
 		}else{
 			this.stopSound();
+			console.log('Stop sound');
 		}
-		this.isPlaying = !this.isPlaying ;
+		this.isPlaying = !this.isPlaying;
+		var icon = $('#' + this.name.replace(" / Clock", ""));
+		icon.toggleClass('active');
 	}
 	
 	createUI(){
 		const soundClips = document.querySelector('.memory');
-		const clipName = 'Memory ' + this.name;
-
+		const clipName = 'MEMORY ' + this.name;
 		const container = document.createElement('article');
 		const clipLabel = document.createElement('p');
 		const audio = document.createElement('audio');
 		const lineBreak = document.createElement('br');
 		const recordButton = document.createElement('Button');
-		const playButton = document.createElement('Button');
+		const playPauseButton = document.createElement('a');
 		const editButton = document.createElement('Button');
 		const deleteButton = document.createElement('Button');
 		const sliderLabel = document.createElement('p');
 		const volumeSlider = document.createElement('Input');
-			   
+
 		container.classList.add('memoryUnit'); 
 		container.classList.add('floatLeft');
 		audio.setAttribute('controls', '');
 		recordButton.innerHTML = "Record";
 		recordButton.addEventListener("click", this.pressRecordButton.bind(this));
-		playButton.innerHTML = "&#9658; / &#10074;&#10074;";
-		playButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
+		playPauseButton.setAttribute('class', 'play');
+		playPauseButton.setAttribute('id', this.name.replace(' / Clock', '')); //remove all Blankspace for the id name
+		playPauseButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
 		editButton.innerHTML = "Edit";
 		deleteButton.innerHTML = "Clear";
 		deleteButton.addEventListener("click", this.deleteFile.bind(this));
 		sliderLabel.innerHTML = "Volume";
 		volumeSlider.setAttribute('type' , 'range');
+		clipLabel.setAttribute('style', "font-family:verdana");
+		clipLabel.setAttribute('style', "font-weight: bold");
 		clipLabel.innerHTML = clipName;
 
 		container.appendChild(clipLabel);
+		container.appendChild(playPauseButton);
 		container.appendChild(recordButton);
-		container.appendChild(playButton);
 		container.appendChild(editButton);
 		container.appendChild(deleteButton);
 		container.appendChild(sliderLabel);
