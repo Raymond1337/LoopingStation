@@ -2,10 +2,10 @@
     display: block;
     width: 0;
     height: 0;
-    border-top: 50px solid transparent;
-    border-bottom: 50px solid transparent;
-    border-left: 60px solid #2c3e50;
-    margin: 35px auto;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+    border-left: 55px solid #2c3e50;
+    margin: 30px auto;
     position: relative;
     z-index: 1;
     transition: all 0s;
@@ -16,10 +16,10 @@
 .play:before {
     content: '';
     position: absolute;
-    top: -75px;
-    left: -115px;
-    bottom: -75px;
-    right: -35px;
+    top: -55px;
+    left: -95px;
+    bottom: -55px;
+    right: -15px;
     border-radius: 50%;
     border: 10px solid #2c3e50;
     z-index: 2;
@@ -49,11 +49,12 @@
     content: '';
     opacity: 1;
     width: 50px;
-    height: 80px;
+    height: 60px;
     background: #2c3e50;
     position: absolute;
+    left: -75px;
     right: 5px;
-    top: -40px;
+    top: -30px;
     border-left: 20px solid #2c3e50;
     box-shadow: inset 30px 0 0 0 #f9f9f9;
 }
