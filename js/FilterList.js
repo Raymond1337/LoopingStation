@@ -5,7 +5,10 @@ export default class FilterList{
 			// Add filters here / use class name.
 			'none',
 			'echo',
-			'reverb'
+			'reverb',
+			'lowshelf',
+			'highshelf',
+			'peaking',
 		];
 		console.log("FilterList instantiated");
 	}
