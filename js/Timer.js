@@ -15,11 +15,7 @@ export default class Timer{
 	}
 	
 	setClock(time){
-		console.log("Timer set to:");
-		//console.log(time);
-		time = time * 1000;
-		console.log("Time in ms:");
-		console.log(time);
+		time = time * 1000; // seconds to ms
 		// run instant after recording
 		this.runAllMemories();
 		this.lsInput.setupClockDelay();

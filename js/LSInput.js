@@ -3,7 +3,8 @@ export default class LSInput{
 	receiver;
 	mediaRecorder;
 	clockTime;
-	delay;
+	recordTime;
+	delay = 0;
 	constructor(_inputFilter, _timer){
 		console.log("LSInput instantiated");
 		this._stream
@@ -33,11 +34,7 @@ export default class LSInput{
 		this.mediaRecorder.ondataavailable = function(e) {
 			if(this.receiver == null){return;}
 			console.log('pushing data to chunks');
-			this.chunks.push(e.data);	
-			// Shift record to match clock
-			if(!this.receiver.isClock){
-				//this.receiver.delay = this.getDelay();
-			}		
+			this.chunks.push(e.data);			
 			console.log(this.chunks);	
 			var blob = new Blob(this.chunks, { 'type' : 'audio/ogg; codecs=opus' });
 			console.log(blob);
@@ -65,6 +62,7 @@ export default class LSInput{
 	
 	startRecord(){
 		this.mediaRecorder.start();
+		this.recordTime = this.clockTime;
 	}
 		
 	endRecordAndReceiveClip(memory){
@@ -77,7 +75,8 @@ export default class LSInput{
 	}
 	
 	getDelay(){
-		this.delay = performance.now() - this.clockTime;
+		this.delay = performance.now() - this.recordTime;
+		console.log(this.recordTime);
 		console.log('Delay s:');
 		console.log(this.delay / 1000);
 		return this.delay;

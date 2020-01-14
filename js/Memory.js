@@ -11,25 +11,26 @@ export default class Memory{
 		this.audio;
 		this.createUI();
 		this.isRecording = false;
-		this.isPlaying = false;
+		this.isPlaying = true;
 		this.isClock;
 		this.delay = 0;
+		this.delayShift = 100; // compensates inpud lag
 	}
 	
 	record(){
 		console.log("record pressed");
 		this.inputFilter.startRecord();
-		this.delay = this.inputFilter.getDelay();
+		this.delay = this.inputFilter.getDelay() - this.delayShift;
 		console.log("delay: ");
 		console.log(this.delay);
 	}
 	
 	playSound(){
 		//console.log("play pressed");
+		setTimeout(function(){
 		if(this.audio == null){return;}
-		//console.log("Delay: ");
-		//console.log(this.delay);
-		setTimeout(function(){this.audio.play()}.bind(this), this.delay)
+			this.audio.play();
+			}.bind(this), this.delay)
 		//this.audio.play();
 	}
 	
@@ -41,7 +42,6 @@ export default class Memory{
 	}
 
 	stopRecord(){
-		console.log("clear pressed");
 		this.inputFilter.endRecordAndReceiveClip(this);
 	}
 	
@@ -79,15 +79,25 @@ export default class Memory{
 	}
 	
 	deleteFile(){
+		if(this.audio == null){return;}
 		this.audio.pause();
 		this.audio = null;
+	}
+	
+	unMuteSound(){
+		this.audio.volume = this.volumen;
+	}
+	
+	muteSound(){
+		this.audio.volume = 0;
 	}
 	
 	setVolumen(volumenInPercent){
 		if(volumenInPercent < 0 || volumenInPercent > 1){
 			return;
 		}
-		this.volumen = volumenInPercent;
+		this.volumen = volumenInPercent
+		this.audio.volume = volumen;
 	}
 	
 	receiveBlob(_blob){
@@ -101,10 +111,10 @@ export default class Memory{
 
 	pressPlayPauseButton(){
 		if(!this.isPlaying){
-			this.playSound();
+			this.unMuteSound();
 			console.log('Play sound');
 		}else{
-			this.stopSound();
+			this.muteSound();
 			console.log('Stop sound');
 		}
 		this.isPlaying = !this.isPlaying;
