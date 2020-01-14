@@ -36,7 +36,7 @@ export default class LoopStation{
 
 		new DynamicMemory(this.memoryArray, amountOfMemoryUnits, lSInput, outputFilter); //LSinput needs to be input filter
 		
-		this.timer = new Timer(this.memoryArray[0], this.memoryArray);
+		this.timer = new Timer(this.memoryArray[0], this.memoryArray, lSInput);
 		var midiAPI = new MidiAPI();	
 
 		console.log("LoopStation instantiated");		

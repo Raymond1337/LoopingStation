@@ -12,6 +12,8 @@ export default class Memory{
 		this.createUI();
 		this.isRecording = false;
 		this.isPlaying = false;
+		this.isClock;
+		this.delay = 0;
 	}
 	
 	record(){
@@ -22,13 +24,15 @@ export default class Memory{
 	playSound(){
 		//console.log("play pressed");
 		if(this.audio == null){return;}
-		this.audio.play();
+		setTimeout(function(){this.audio.play()}.bind(this), this.delay)
+		//this.audio.play();
 	}
 	
 	stopSound(){
 		//console.log("stop pressed");
 		if(this.audio == null){return;}
 		this.audio.pause();
+		this.audio.currentTime = 0; // bc there is no stop function
 	}
 
 	stopRecord(){
@@ -41,21 +45,22 @@ export default class Memory{
 	}
 	
 	setLoopstation(_loopstation){
-		console.log("LS reference set to:");
-		console.log(_loopstation);
 		this.loopstation = _loopstation;
+		this.isClock = (this == this.loopstation.memoryArray[0]);
 	}
 	
 	reciveBlob(_blob){
-		console.log("Blob received");
+		console.log("Blob received:");
 		console.log(_blob);
 		this.blob = _blob;
 		const audioURL = window.URL.createObjectURL(this.blob);
 		this.audio = new Audio(audioURL);
 		
-		if(this == this.loopstation.memoryArray[0]){
-			console.log(this.audio.duration);
-			this.loopstation.timer.setClock(this.audio.duration);
+		if(this.isClock){
+			// Duration is only getable if metadata has loaded
+			this.audio.onloadedmetadata = function() {
+				this.loopstation.timer.setClock(this.audio.duration);
+			}.bind(this);
 		}
 	}
 	
@@ -140,7 +145,5 @@ export default class Memory{
 		container.appendChild(sliderLabel);
 		container.appendChild(volumeSlider);
 		soundClips.appendChild(container);
-
-		console.log("created Memory UI");
 	}
 }

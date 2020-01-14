@@ -1,33 +1,38 @@
 export default class Timer{
-	constructor(firstMemory, _memories){
+	constructor(firstMemory, _memories, _lsInput){
 		console.log("Timer instantiated");
 		this.referenceMemory = firstMemory;
 		this.memories = _memories;
-		this.interval;
-		
-		//TODO: remove
-		//console.log(this.memories);
-		//this.setClock(8000);
+		this.lsInput = _lsInput;
+		this.replayInterval;
+		this.bufferInterval;
 	}
 
 	cancel(){
 		console.log("Timer canceled");
-		interval = null;
+		replayInterval = null;
+		bufferInterval = null;
 	}
 	
 	setClock(time){
 		console.log("Timer set to:");
+		//console.log(time);
+		time = time * 1000;
+		console.log("Time in ms:");
 		console.log(time);
-		this.interval = window.setInterval(this.runAllMemories.bind(this), time);
+		// run instant after recording
+		this.runAllMemories();
+		this.lsInput.setupClockBuffer();
+		// start loop after interval
+		this.replayInterval = window.setInterval(this.runAllMemories.bind(this), time);
+		this.bufferInterval = window.setInterval(this.lsInput.setupClockBuffer.bind(this.lsInput), time);
 	}
 	
 	runAllMemories(){
-		console.log('trying to run memories');
-		console.log('memory length' + this.memories.length)
+		console.log("Clock time: "+ Date.now());
 		for (var index = 0; index < this.memories.length; index++){
 			this.memories[index].stopSound();
 			this.memories[index].playSound();	
-			console.log(this.memories[index]);
 		}
 	}
 }
