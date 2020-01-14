@@ -2,12 +2,8 @@ export default class LSInput{
 	chunks = [];
 	receiver;
 	mediaRecorder;
+	clockTime;
 	delay;
-	bufferRecorder;
-	audioContextBuffer;
-	destBuffer;
-	clockBuffer;
-	bufferChunks = [];
 	constructor(_inputFilter, _timer){
 		console.log("LSInput instantiated");
 		this._stream
@@ -40,9 +36,7 @@ export default class LSInput{
 			this.chunks.push(e.data);	
 			// Shift record to match clock
 			if(!this.receiver.isClock){
-				var emptyChunks = this.getBufferChunks();
-				var blob = new Blob(emptyChunks, { 'type' : 'audio/ogg; codecs=opus' });
-				this.chunks.unshift(blob); // Add time to the front
+				//this.receiver.delay = this.getDelay();
 			}		
 			console.log(this.chunks);	
 			var blob = new Blob(this.chunks, { 'type' : 'audio/ogg; codecs=opus' });
@@ -78,33 +72,14 @@ export default class LSInput{
 		this.mediaRecorder.stop();
 	}	
 	
-	// BufferGenerator //////////////////////////////////////
-	instantiateBufferCreator(){
-		this.audioContextBuffer = new AudioContext();
-		this.destBuffer = this.audioContextBuffer.createMediaStreamDestination();
-		this.bufferRecorder = new MediaRecorder(this.destBuffer.stream);
-		this.bufferRecorder.ondataavailable = function(e) {
-			// push each chunk (blobs) in an array	
-			console.log('pushing buffer');
-			this.bufferChunks.push(e.data);
-		}.bind(this);
+	setupClockDelay(){
+		this.clockTime = performance.now();
 	}
 	
-	setupClockBuffer(){
-		this.delay = performance.now();
-		if(!this.bufferRecorder.state == 'recording'){	
-			this.bufferChunks = [];	
-			this.bufferRecorder.start(1);
-		}
-	}
-	
-	getBufferChunks(){
-		this.delay = performance.now() - this.delay;
+	getDelay(){
+		this.delay = performance.now() - this.clockTime;
 		console.log('Delay s:');
 		console.log(this.delay / 1000);
-		this.bufferRecorder.stop();
-		console.log('Buffer:');
-		console.log(this.bufferChunks);
-		return this.bufferChunks;
+		return this.delay;
 	}
 }

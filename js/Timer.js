@@ -22,10 +22,10 @@ export default class Timer{
 		console.log(time);
 		// run instant after recording
 		this.runAllMemories();
-		this.lsInput.setupClockBuffer();
+		this.lsInput.setupClockDelay();
 		// start loop after interval
 		this.replayInterval = window.setInterval(this.runAllMemories.bind(this), time);
-		this.bufferInterval = window.setInterval(this.lsInput.setupClockBuffer.bind(this.lsInput), time);
+		this.bufferInterval = window.setInterval(this.lsInput.setupClockDelay.bind(this.lsInput), time);
 	}
 	
 	runAllMemories(){

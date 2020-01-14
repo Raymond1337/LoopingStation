@@ -19,11 +19,16 @@ export default class Memory{
 	record(){
 		console.log("record pressed");
 		this.inputFilter.startRecord();
+		this.delay = this.inputFilter.getDelay();
+		console.log("delay: ");
+		console.log(this.delay);
 	}
 	
 	playSound(){
 		//console.log("play pressed");
 		if(this.audio == null){return;}
+		//console.log("Delay: ");
+		//console.log(this.delay);
 		setTimeout(function(){this.audio.play()}.bind(this), this.delay)
 		//this.audio.play();
 	}
@@ -74,6 +79,7 @@ export default class Memory{
 	}
 	
 	deleteFile(){
+		this.audio.pause();
 		this.audio = null;
 	}
 	
