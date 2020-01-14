@@ -21,8 +21,6 @@ export default class Memory{
 		console.log("record pressed");
 		this.inputFilter.startRecord();
 		this.delay = this.inputFilter.getDelay() - this.delayShift;
-		console.log("delay: ");
-		console.log(this.delay);
 	}
 	
 	playSound(){

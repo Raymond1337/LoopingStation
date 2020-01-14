@@ -76,9 +76,6 @@ export default class LSInput{
 	
 	getDelay(){
 		this.delay = performance.now() - this.recordTime;
-		console.log(this.recordTime);
-		console.log('Delay s:');
-		console.log(this.delay / 1000);
 		return this.delay;
 	}
 }
