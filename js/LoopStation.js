@@ -20,6 +20,8 @@ export default class LoopStation{
 		var inputFilter = new InputFilter(outputFilter, filterList);
 		var lSInput = new LSInput(inputFilter);
 		this.numberOfMemories = amountOfMemoryUnits;
+		
+		this.createUI();
 
 		// Create standard Memory units
 		// Code bei Create dynamic Memory unit bitte auch anpassen wenn ihr was ändert.
@@ -44,5 +46,26 @@ export default class LoopStation{
 	
 	resetLoopstation(){
 		instance = null;
+	}
+	
+	createUI(){
+		const soundClips = document.querySelector('.generalControlls');
+		const container = document.createElement('article');
+		const label = document.createElement('p');
+		const muteAllButton = document.createElement('Button');
+
+		container.classList.add('memoryUnit'); 
+		container.classList.add('floatLeft');
+		label.setAttribute('style', "font-family:verdana");
+		label.setAttribute('style', "font-weight: bold");
+		label.innerHTML = 'Memory controls';
+		//playPauseButton.setAttribute('id', 'play' + this.name.replace(' / CLOCK', '')); //remove all Blankspace for the id name
+		//playPauseButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
+		muteAllButton.innerHTML = "Mute All";
+		//deleteButton.addEventListener("click", this.deleteFile.bind(this));
+
+		container.appendChild(label);
+		container.appendChild(muteAllButton);
+		soundClips.appendChild(container);
 	}
 }

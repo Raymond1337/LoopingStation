@@ -95,16 +95,16 @@ export default class Memory{
 			return;
 		}
 		this.volumen = volumenInPercent
-		this.audio.volume = volumen;
+		this.audio.volume = this.volumen;
 	}
 	
 	receiveBlob(_blob){
 		console.log("Blob received");
-		console.log(_blob);
+		//console.log(_blob);
 		this.blob = _blob;
 		const audioURL = window.URL.createObjectURL(this.blob);
 		this.audio = new Audio(audioURL);
-		console.log(this.audio);
+		//console.log(this.audio);
 	}
 
 	pressPlayPauseButton(){
@@ -125,7 +125,6 @@ export default class Memory{
 		const clipName = 'MEMORY ' + this.name;
 		const container = document.createElement('article');
 		const clipLabel = document.createElement('p');
-		const audio = document.createElement('audio');
 		const recordButton = document.createElement('Button');
 		const playPauseButton = document.createElement('a');
 		const editButton = document.createElement('Button');
@@ -135,7 +134,6 @@ export default class Memory{
 
 		container.classList.add('memoryUnit'); 
 		container.classList.add('floatLeft');
-		audio.setAttribute('controls', '');
 		clipLabel.setAttribute('style', "font-family:verdana");
 		clipLabel.setAttribute('style', "font-weight: bold");
 		clipLabel.innerHTML = clipName;
@@ -149,7 +147,13 @@ export default class Memory{
 		deleteButton.addEventListener("click", this.deleteFile.bind(this));
 		sliderLabel.innerHTML = "Volume";
 		volumeSlider.setAttribute('type' , 'range');
+		volumeSlider.setAttribute('min' , '0');
+		volumeSlider.setAttribute('max' , '100');
+		volumeSlider.setAttribute('value' , '100');
 		volumeSlider.setAttribute('class', 'volumeSlider');
+		volumeSlider.addEventListener('input', function() {
+			this.setVolumen(volumeSlider.value / 100);
+		}.bind(this));
 
 		container.appendChild(clipLabel);
 		container.appendChild(playPauseButton);

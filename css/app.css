@@ -120,7 +120,7 @@ footer div {
 .memory{
 	width : 100%;
 	display : block;
-	margin : 50px auto;
+	margin : 70px auto;
 }
 
 .memoryUnit{
@@ -135,6 +135,12 @@ footer div {
     padding: 0.01em 16px;
     border: 1px solid #878787 !important;
     border-radius: 6px;
+}
+
+.tutorial{
+	width : 100%;
+	display : block;
+	margin : 10px auto;
 }
 
 select {
