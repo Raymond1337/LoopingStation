@@ -1,12 +1,12 @@
 export default class Memory{	
 
-	constructor(_name, _inputFilter, _outputFilter, _reference){
+	constructor(_name, _input, _outputFilter, _reference){
 		console.log("Memory instantiated");
 		this.loopstation;
 		this.name = _name;
 		this.volumen = 1;
 		this.outputFilter = _outputFilter; //Get outputfilter from Loopstation
-		this.inputFilter = _inputFilter;
+		this.input = _input;
 		this.blob;
 		this.audio;
 		this.createUI();
@@ -19,17 +19,18 @@ export default class Memory{
 	
 	record(){
 		console.log("record pressed");
-		this.inputFilter.startRecord();
-		this.delay = this.inputFilter.getDelay() - this.delayShift;
+		this.input.startRecord();
+		if(!this.isClock){
+			this.delay = this.input.getDelay() - this.delayShift;
+		}
 	}
 	
 	playSound(){
 		//console.log("play pressed");
 		setTimeout(function(){
-		if(this.audio == null){return;}
+			if(this.audio == null){return;}
 			this.audio.play();
 			}.bind(this), this.delay)
-		//this.audio.play();
 	}
 	
 	stopSound(){
@@ -40,7 +41,7 @@ export default class Memory{
 	}
 
 	stopRecord(){
-		this.inputFilter.endRecordAndReceiveClip(this);
+		this.input.endRecordAndReceiveClip(this);
 	}
 	
 	setTimer(timer){
@@ -58,7 +59,7 @@ export default class Memory{
 		this.blob = _blob;
 		const audioURL = window.URL.createObjectURL(this.blob);
 		this.audio = new Audio(audioURL);
-		
+			
 		if(this.isClock){
 			// Duration is only getable if metadata has loaded
 			this.audio.onloadedmetadata = function() {
@@ -98,13 +99,17 @@ export default class Memory{
 		this.audio.volume = this.volumen;
 	}
 	
-	receiveBlob(_blob){
-		console.log("Blob received");
+	receiveAudio(_audio){
+		console.log("Audio received");
 		//console.log(_blob);
-		this.blob = _blob;
-		const audioURL = window.URL.createObjectURL(this.blob);
-		this.audio = new Audio(audioURL);
-		//console.log(this.audio);
+		this.audio = _audio;
+
+		if(this.isClock){
+			// Duration is only getable if metadata has loaded
+			this.audio.onloadedmetadata = function() {
+				this.loopstation.timer.setClock(this.audio.duration);
+			}.bind(this);
+		}
 	}
 
 	pressPlayPauseButton(){

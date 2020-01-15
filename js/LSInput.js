@@ -5,6 +5,8 @@ export default class LSInput{
 	clockTime;
 	recordTime;
 	delay = 0;
+	inputFilter = null;
+	
 	constructor(_inputFilter, _timer){
 		console.log("LSInput instantiated");
 		this._stream
@@ -39,12 +41,31 @@ export default class LSInput{
 			var blob = new Blob(this.chunks, { 'type' : 'audio/ogg; codecs=opus' });
 			console.log(blob);
 			console.log('sending Blob');
-			this.receiver.reciveBlob(blob);
+			const audioURL = window.URL.createObjectURL(blob);
+			var audio = new Audio(audioURL);
+			
+			// Apply Filter
+			if(this.inputFilter != null){
+				console.log('this.inputFilter != null');
+				console.log(this.inputFilter);
+				var context = new AudioContext();
+				var source = context.createMediaElementSource(audio);
+				var filter = this.inputFilter;
+				
+				//filter = context.createBiquadFilter();
+				//filter.frequency.value = 70;
+				//filter.gain.value = 200;
+				//return filter;
+				
+				source.connect(filter);
+				filter.connect(context.destination);
+			}
+			
+			this.receiver.receiveAudio(audio);
 			console.log('clear Chunks');
 			this.chunks = [];
 		}.bind(this);
 		this.volumen = 1;
-		this.inputFilter = _inputFilter;
 				
 		this.mediaRecorder.onstop = function(e) {
 			console.log("recorder stopped");
@@ -77,5 +98,11 @@ export default class LSInput{
 	getDelay(){
 		this.delay = performance.now() - this.recordTime;
 		return this.delay;
+	}
+	
+	setFilter(_filter){
+		console.log('Filter set:');
+		console.log(_filter);
+		this.inputFilter = _filter;
 	}
 }

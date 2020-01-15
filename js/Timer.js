@@ -10,8 +10,10 @@ export default class Timer{
 
 	cancel(){
 		console.log("Timer canceled");
-		replayInterval = null;
-		bufferInterval = null;
+		window.clearInterval(this.replayInterval);
+		window.clearInterval(this.bufferInterval);
+		this.replayInterval = null;
+		this.bufferInterval = null;
 	}
 	
 	setClock(time){
@@ -19,6 +21,7 @@ export default class Timer{
 		console.log("Timer in ms:");
 		console.log(time);
 		// run instant after recording
+		this.cancel();
 		this.runAllMemories();
 		this.lsInput.setupClockDelay();
 		// start loop after interval

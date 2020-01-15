@@ -1,3 +1,10 @@
+import("./filter/none.js");
+import("./filter/echo.js");
+import("./filter/reverb.js");
+import("./filter/lowshelf.js");
+import("./filter/highshelf.js");
+import("./filter/peaking.js");
+
 export default class FilterList{
 	constructor(){
 		this.path = './filter/'

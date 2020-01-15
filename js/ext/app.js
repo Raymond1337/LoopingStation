@@ -3,8 +3,11 @@ var loopstation;
 
 createUI();
 
-function resetLoopstation(memoryCount){
-	loopstation = new LoopStation(memoryCount);
+function resetLoopstation(){
+	clearUI();
+	createUI();
+	loopstation = new LoopStation(4);
+	//location.reload();
 }
 
 
@@ -21,16 +24,23 @@ function createUI(){
 		label.setAttribute('style', "font-weight: bold");
 		label.innerHTML = 'General controls';
 		clearAllButton.innerHTML = "Clear All";
-		//playPauseButton.setAttribute('id', 'play' + this.name.replace(' / CLOCK', '')); //remove all Blankspace for the id name
-		//playPauseButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
-		//deleteButton.addEventListener("click", this.deleteFile.bind(this));
+		clearAllButton.addEventListener("click", resetLoopstation);
 
 		container.appendChild(label);
 		container.appendChild(clearAllButton);
 		soundClips.appendChild(container);
 	}
-
+function clearUI(){
+		const soundClips = document.querySelector('.memory');
+		const outClips = document.querySelector('.outputFilter');
+		const inClips = document.querySelector('.inputFilter');
+		const controlClips = document.querySelector('.generalControlls');
+		soundClips.innerHTML = "";
+		outClips.innerHTML = "";
+		inClips.innerHTML = "";
+		controlClips.innerHTML = "";
+}
 document.addEventListener("DOMContentLoaded", function () {
-	resetLoopstation(4);
+	loopstation = new LoopStation(4);
     console.log("***************** Page build *****************");
 }, false);
