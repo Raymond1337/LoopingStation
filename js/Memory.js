@@ -69,12 +69,15 @@ export default class Memory{
 	}
 	
 	pressRecordButton(){
+		var icon = $('#' + 'record' + this.name.replace(" / CLOCK", ""));
+		icon.toggleClass('active');
 		if(!this.isRecording){
 			this.record();
 		}else{
 			this.stopRecord();
 		}
 		this.isRecording = !this.isRecording ;
+		
 	}
 	
 	deleteFile(){
@@ -117,16 +120,17 @@ export default class Memory{
 	}
 
 	pressPlayPauseButton(){
+		var muteTrackButton = document.getElementById('muteTrackButton');
 		if(!this.isPlaying){
+			muteTrackButton.innerHTML = "Unmute Track &#128266";
 			this.unMuteSound();
-			console.log('Play sound');
+			console.log('Unmute sound');
 		}else{
+			muteTrackButton.innerHTML = "Mute Track &#128263";
 			this.muteSound();
-			console.log('Stop sound');
+			console.log('Mute sound');
 		}
 		this.isPlaying = !this.isPlaying;
-		var icon = $('#' + 'play' + this.name.replace(" / CLOCK", ""));
-		icon.toggleClass('active');
 	}
 	
 	
@@ -139,8 +143,8 @@ export default class Memory{
 		const clipName = 'MEMORY ' + this.name;
 		const container = document.createElement('article');
 		const clipLabel = document.createElement('p');
-		const recordButton = document.createElement('Button');
-		const playPauseButton = document.createElement('a');
+		const recordingButton = document.createElement('a');
+		const muteTrackButton = document.createElement('Button');
 		const editButton = document.createElement('Button');
 		const deleteButton = document.createElement('Button');
 		const sliderLabel = document.createElement('p');
@@ -151,11 +155,14 @@ export default class Memory{
 		clipLabel.setAttribute('style', "font-family:verdana");
 		clipLabel.setAttribute('style', "font-weight: bold");
 		clipLabel.innerHTML = clipName;
-		recordButton.innerHTML = "Record";
-		recordButton.addEventListener("click", this.pressRecordButton.bind(this));
-		playPauseButton.setAttribute('class', 'play');
-		playPauseButton.setAttribute('id', 'play' + this.name.replace(' / CLOCK', '')); //remove all Blankspace for the id name
-		playPauseButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
+		muteTrackButton.innerHTML = "Mute Track &#128263";
+		muteTrackButton.setAttribute('id', 'muteTrackButton');
+		muteTrackButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
+
+		recordingButton.setAttribute('class', 'record');
+		recordingButton.setAttribute('id', 'record' + this.name.replace(' / CLOCK', '')); //remove all Blankspace for the id name
+		recordingButton.addEventListener("click", this.pressRecordButton.bind(this));
+
 		editButton.innerHTML = "Edit";
 		editButton.addEventListener("click", this.pressEditButton.bind(this));
 		deleteButton.innerHTML = "Clear";
@@ -164,15 +171,15 @@ export default class Memory{
 		volumeSlider.setAttribute('type' , 'range');
 		volumeSlider.setAttribute('min' , '0');
 		volumeSlider.setAttribute('max' , '100');
-		volumeSlider.setAttribute('value' , '100');
+		volumeSlider.setAttribute('value' , '50');
 		volumeSlider.setAttribute('class', 'volumeSlider');
 		volumeSlider.addEventListener('input', function() {
 			this.setVolumen(volumeSlider.value / 100);
 		}.bind(this));
 
 		container.appendChild(clipLabel);
-		container.appendChild(playPauseButton);
-		container.appendChild(recordButton);
+		container.appendChild(recordingButton);
+		container.appendChild(muteTrackButton);
 		container.appendChild(editButton);
 		container.appendChild(deleteButton);
 		container.appendChild(sliderLabel);
