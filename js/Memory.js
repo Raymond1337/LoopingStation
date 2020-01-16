@@ -120,13 +120,13 @@ export default class Memory{
 	}
 
 	pressPlayPauseButton(){
-		var muteTrackButton = document.getElementById('muteTrackButton');
+		var muteTrackButton = document.getElementById('muteTrackButton'+ this.name.replace(' / CLOCK', ''));
 		if(!this.isPlaying){
-			muteTrackButton.innerHTML = "Unmute Track &#128266";
+			muteTrackButton.innerHTML = "Mute Track &#128263";
 			this.unMuteSound();
 			console.log('Unmute sound');
 		}else{
-			muteTrackButton.innerHTML = "Mute Track &#128263";
+			muteTrackButton.innerHTML = "Unmute Track &#128266";
 			this.muteSound();
 			console.log('Mute sound');
 		}
@@ -155,7 +155,7 @@ export default class Memory{
 		clipLabel.setAttribute('style', "font-weight: bold");
 		clipLabel.innerHTML = clipName;
 		muteTrackButton.innerHTML = "Mute Track &#128263";
-		muteTrackButton.setAttribute('id', 'muteTrackButton');
+		muteTrackButton.setAttribute('id', 'muteTrackButton'+ this.name.replace(' / CLOCK', ''));
 		muteTrackButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
 
 		recordingButton.setAttribute('class', 'record');
