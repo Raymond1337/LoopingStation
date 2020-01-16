@@ -84,10 +84,14 @@ export default class Memory{
 	}
 	
 	unMuteSound(){
+		this.isPlaying = true;
+		if(this.audio == null){return;}
 		this.audio.volume = this.volumen;
 	}
 	
 	muteSound(){
+		this.isPlaying = false;
+		if(this.audio == null){return;}
 		this.audio.volume = 0;
 	}
 	

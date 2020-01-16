@@ -50,7 +50,9 @@ export default class LoopStation{
 	
 	muteAll(){
 		console.log("muting all");
-		//for()
+		for (var count = 0; count < this.memoryArray.length; count++){
+			this.memoryArray[count].muteSound();
+		}
 	}
 	
 	createUI(){

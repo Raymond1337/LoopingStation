@@ -4,6 +4,9 @@ var loopstation;
 createUI();
 
 function resetLoopstation(){
+    console.log(loopstation.timer);
+	loopstation.muteAll();
+	loopstation.timer.cancel();
 	clearUI();
 	createUI();
 	loopstation = new LoopStation(4);
