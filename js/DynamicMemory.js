@@ -31,6 +31,8 @@ export default class DynamicMemory{
         const lineBreak8 = document.createElement('br');
         const lineBreak9 = document.createElement('br');
         const lineBreak10 = document.createElement('br');
+        const lineBreak11 = document.createElement('br');
+        const lineBreak12 = document.createElement('br');
         const plusNewMemoryButton = document.createElement('Button');
         const plusNewMemoryButtonSpan = document.createElement('Span');
 
@@ -48,12 +50,14 @@ export default class DynamicMemory{
         container.appendChild(lineBreak3);
         container.appendChild(lineBreak4);
         container.appendChild(lineBreak5);
-        container.appendChild(plusNewMemoryButton);
         container.appendChild(lineBreak6);
+        container.appendChild(plusNewMemoryButton);
         container.appendChild(lineBreak7);
         container.appendChild(lineBreak8);
         container.appendChild(lineBreak9);
         container.appendChild(lineBreak10);
+        container.appendChild(lineBreak11);
+        container.appendChild(lineBreak12);
         soundClips.appendChild(container);
 
 		console.log("created Memory UI");
