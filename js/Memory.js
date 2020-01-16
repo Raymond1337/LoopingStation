@@ -162,9 +162,9 @@ export default class Memory{
 		recordingButton.setAttribute('id', 'record' + this.name.replace(' / CLOCK', '')); //remove all Blankspace for the id name
 		recordingButton.addEventListener("click", this.pressRecordButton.bind(this));
 
-		editButton.innerHTML = "Edit";
+		editButton.innerHTML = "Edit &#x270D";
 		editButton.addEventListener("click", this.pressEditButton.bind(this));
-		deleteButton.innerHTML = "Clear";
+		deleteButton.innerHTML = "Clear &#128465";
 		deleteButton.addEventListener("click", this.deleteFile.bind(this));
 		sliderLabel.innerHTML = "Volume";
 		volumeSlider.setAttribute('type' , 'range');
