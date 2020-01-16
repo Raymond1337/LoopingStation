@@ -20,7 +20,6 @@ export default class LSInput{
 				// Success callback
 				.then(function(stream) {
 					this.createMediaRecorder(stream);
-					this.instantiateBufferCreator();
 				}.bind(this))
 				// Error callback
 				.catch(function(err) {
