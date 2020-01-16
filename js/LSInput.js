@@ -6,8 +6,9 @@ export default class LSInput{
 	recordTime;
 	delay = 0;
 	inputFilter = null;
+	audioContext = null;
 	
-	constructor(_inputFilter, _timer){
+	constructor(_timer){
 		console.log("LSInput instantiated");
 		this._stream
 		this.timer = _timer;
@@ -18,7 +19,7 @@ export default class LSInput{
 		    navigator.mediaDevices.getUserMedia ({audio: true})
 				// Success callback
 				.then(function(stream) {
-					this.createMediaRecorder(_inputFilter, stream);
+					this.createMediaRecorder(stream);
 					this.instantiateBufferCreator();
 				}.bind(this))
 				// Error callback
@@ -31,7 +32,7 @@ export default class LSInput{
 		}
 	}
 	
-	createMediaRecorder(_inputFilter, stream){
+	createMediaRecorder(stream){
 		this.mediaRecorder = new MediaRecorder(stream);
 		this.mediaRecorder.ondataavailable = function(e) {
 			if(this.receiver == null){return;}
@@ -48,15 +49,10 @@ export default class LSInput{
 			if(this.inputFilter != null){
 				console.log('this.inputFilter != null');
 				console.log(this.inputFilter);
-				var context = new AudioContext();
+				console.log(this.audioContext);
+				var context = this.audioContext;
 				var source = context.createMediaElementSource(audio);
 				var filter = this.inputFilter;
-				
-				//filter = context.createBiquadFilter();
-				//filter.frequency.value = 70;
-				//filter.gain.value = 200;
-				//return filter;
-				
 				source.connect(filter);
 				filter.connect(context.destination);
 			}
@@ -103,6 +99,7 @@ export default class LSInput{
 	setFilter(_filter){
 		console.log('Filter set:');
 		console.log(_filter);
-		this.inputFilter = _filter;
+		this.inputFilter = _filter[1];
+		this.audioContext = _filter[0];
 	}
 }

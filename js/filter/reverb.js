@@ -14,8 +14,8 @@ class reverb{
         this.release = reverbTime;
 
         this.wet = this.context.createGain();
-    this.input.connect(this.wet);
-    this.wet.connect(this.effect);
+		this.input.connect(this.wet);
+		this.wet.connect(this.effect);
         this.effect.connect(this.output);    
         
         this.renderTail();

@@ -18,6 +18,28 @@ export default class OutputFilter{
 	
 	setFilter(_filter){
 		this.filter = _filter;
+		console.log("filter:");
+		//console.log(_filter);
+		//console.log(this.filterList);
+		this.filter = this.filterList.filterInstances[_filter];
+		console.log(this.filter);
+		if(_filter[0] == null)
+		{
+			this.filter = null;
+		}
+	}
+	
+	edit(audio){
+		console.log("Edited");
+		if(this.filter[0] != null){
+				console.log('this.outputFilter != null');
+				var context = this.filter[0];
+				var source = context.createMediaElementSource(audio);
+				var filter = this.filter[1];
+				source.connect(filter);
+				filter.connect(context.destination);
+		}
+		return audio;
 	}
 	
 	createUI(){
@@ -40,13 +62,15 @@ export default class OutputFilter{
 		volumeSlider.setAttribute('min' , '0');
 		volumeSlider.setAttribute('max' , '200');
 		volumeSlider.setAttribute('value' , '100');
+			
+		filterComboBox.onchange = function(){this.setFilter(filterComboBox.value);}.bind(this);
 		
 		for(var index = 0; index < this.filterList.getFilterNames().length; index++){
 			var filterComboBoxOption = document.createElement('option');
 			filterComboBoxOption.setAttribute('value', index);
 			filterComboBoxOption.innerHTML = this.filterList.getFilterNames()[index];
 			filterComboBox.appendChild(filterComboBoxOption);
-		}
+		} 
 
 		container.appendChild(label);
 		container.appendChild(filterComboBox);

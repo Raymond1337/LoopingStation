@@ -1,10 +1,12 @@
 export default class InputFilter{
-	constructor(directOutput, _filterList){
+	constructor(_input, directOutput, _filterList){
 		console.log("Inputfiler instantiated");
 		this.strength = 1;
 		this.outputFilter = directOutput;
 		this.filterList = _filterList;
 		this.filter;
+		this.input =_input;
+		
 		// create UI
 		this.createUI();
 	}
@@ -18,11 +20,11 @@ export default class InputFilter{
 	
 	setFilter(_filter){
 		console.log("filter:");
-		console.log(_filter);
-		console.log(this.filterList);
-		console.log(this.filterList.filters[_filter]);
-		//this.filterList[_filter];
-		//this.filter = _filter;
+		//console.log(_filter);
+		//console.log(this.filterList);
+		console.log(this.filterList.filterInstances[_filter]);
+		
+		this.input.setFilter(this.filterList.filterInstances[_filter])
 	}
 	
 	createUI(){

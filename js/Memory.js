@@ -125,6 +125,11 @@ export default class Memory{
 		icon.toggleClass('active');
 	}
 	
+	
+	pressEditButton(){
+		this.audio = this.outputFilter.edit(this.audio);
+	}
+	
 	createUI(){
 		const soundClips = document.querySelector('.memory');
 		const clipName = 'MEMORY ' + this.name;
@@ -148,6 +153,7 @@ export default class Memory{
 		playPauseButton.setAttribute('id', 'play' + this.name.replace(' / CLOCK', '')); //remove all Blankspace for the id name
 		playPauseButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
 		editButton.innerHTML = "Edit";
+		editButton.addEventListener("click", this.pressEditButton.bind(this));
 		deleteButton.innerHTML = "Clear";
 		deleteButton.addEventListener("click", this.deleteFile.bind(this));
 		sliderLabel.innerHTML = "Volume";

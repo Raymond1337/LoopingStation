@@ -17,8 +17,8 @@ export default class LoopStation{
 		var lSOutput = new LSOutput();
 		var filterList = new FilterList();
 		var outputFilter = new OutputFilter(lSOutput, filterList);
-		var inputFilter = new InputFilter(outputFilter, filterList);
-		var lSInput = new LSInput(inputFilter);
+		var lSInput = new LSInput();
+		var inputFilter = new InputFilter(lSInput, outputFilter, filterList);
 		this.numberOfMemories = amountOfMemoryUnits;
 		
 		this.createUI();
@@ -48,6 +48,11 @@ export default class LoopStation{
 		instance = null;
 	}
 	
+	muteAll(){
+		console.log("muting all");
+		//for()
+	}
+	
 	createUI(){
 		const soundClips = document.querySelector('.generalControlls');
 		const container = document.createElement('article');
@@ -59,10 +64,8 @@ export default class LoopStation{
 		label.setAttribute('style', "font-family:verdana");
 		label.setAttribute('style', "font-weight: bold");
 		label.innerHTML = 'Memory controls';
-		//playPauseButton.setAttribute('id', 'play' + this.name.replace(' / CLOCK', '')); //remove all Blankspace for the id name
-		//playPauseButton.addEventListener("click", this.pressPlayPauseButton.bind(this));
 		muteAllButton.innerHTML = "Mute All";
-		//deleteButton.addEventListener("click", this.deleteFile.bind(this));
+		muteAllButton.addEventListener("click", this.muteAll.bind(this));
 
 		container.appendChild(label);
 		container.appendChild(muteAllButton);
