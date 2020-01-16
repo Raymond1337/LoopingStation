@@ -130,7 +130,6 @@ export default class Memory{
 			this.muteSound();
 			console.log('Mute sound');
 		}
-		this.isPlaying = !this.isPlaying;
 	}
 	
 	
