@@ -4,21 +4,26 @@ export default class FilterList{
 			// Add filters here / use class name.
 			'none',
 			'lowpass',
-			'highshelf'
+			'highshelf',
 			//'echo',
 			//'reverb',
 			//'lowshelf',
-			//'peaking',
+			'peaking',
+			'notch',
+			'allpass',
+			'bandpass'
 		];
 		
 		this.filterInstances = [
 			// Add filters here / use class name.
-			this.getFilterNone(), // 'none'
-			this.getFilterLowpass(),//'echo', 
-			this.getFilterHighshelf(),//'highshelf', 
-			//'reverb',
-			//'lowshelf'
-			//'peaking'
+			this.getFilterNone(),
+			this.getFilterLowpass(), 
+			this.getFilterHighshelf(),
+			this.getFilterPeaking(),
+			this.getNotchFilter(),
+			this.getAllpassFilter(),
+			this.getBandpassFilter()
+		
 		];
 		
 		console.log("FilterList instantiated");
@@ -68,5 +73,57 @@ export default class FilterList{
         highFilter.connect(gainNode);
 		
 		return [context, highFilter];
+	}
+
+	getFilterPeaking(){
+		var context = new AudioContext();
+
+		var gainNode = context.createGain(); // it should just one time written in InputFilter.js
+		var peakingFilter = context.createBiquadFilter();
+		peakingFilter.type = "peaking";
+		peakingFilter.frequency.value=300;
+		peakingFilter.gain.value = 100 //strength.value;
+		peakingFilter.connect(gainNode);
+
+		return [context, peakingFilter];
+	}
+
+	getNotchFilter(){
+		var context = new AudioContext();
+
+		var gainNode = context.createGain(); // it should just one time written in InputFilter.js
+		var notchFilter = context.createBiquadFilter();
+		notchFilter.type = "notch";
+		notchFilter.frequency.value=60;
+		notchFilter.gain.value = 10 //strength.value;
+		notchFilter.connect(gainNode);
+
+		return [context, notchFilter];
+	}
+
+	getAllpassFilter(){
+		var context = new AudioContext();
+
+		var gainNode = context.createGain(); // it should just one time written in InputFilter.js
+		var allpassFilter = context.createBiquadFilter();
+		allpassFilter.type = "notch";
+		allpassFilter.frequency.value=1000;
+		allpassFilter.gain.value = 30 //strength.value;
+		allpassFilter.connect(gainNode);
+
+		return [context, allpassFilter];
+	}
+
+	getBandpassFilter(){
+		var context = new AudioContext();
+
+		var gainNode = context.createGain(); // it should just one time written in InputFilter.js
+		var bandpassFilter = context.createBiquadFilter();
+		bandpassFilter.type = "bandpass";
+		bandpassFilter.frequency.value=1000;
+		bandpassFilter.gain.value = 30 //strength.value;
+		bandpassFilter.connect(gainNode);
+
+		return [context, bandpassFilter];
 	}
 }
