@@ -4,12 +4,12 @@ var loopstation;
 createUI();
 
 function resetLoopstation(){
-    console.log(loopstation.timer);
+    console.log("reseted");
 	loopstation.muteAll();
 	loopstation.timer.cancel();
 	clearUI();
 	createUI();
-	loopstation = new LoopStation(4);
+	loopstation = new LoopStation(4, resetLoopstation);
 	//location.reload();
 }
 
@@ -44,6 +44,6 @@ function clearUI(){
 		controlClips.innerHTML = "";
 }
 document.addEventListener("DOMContentLoaded", function () {
-	loopstation = new LoopStation(4);
+	loopstation = new LoopStation(4, resetLoopstation);
     console.log("***************** Page build *****************");
 }, false);

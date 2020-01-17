@@ -15,6 +15,7 @@ export default class Memory{
 		this.isClock;
 		this.delay = 0;
 		this.delayShift = 100; // compensates inpud lag
+		this.volumeSlider;
 	}
 	
 	record(){
@@ -103,6 +104,8 @@ export default class Memory{
 			return;
 		}
 		this.volumen = volumenInPercent
+		this.volumeSlider.value = volumenInPercent * 100;
+		if(this.audio == null){return;}
 		this.audio.volume = this.volumen;
 	}
 	
@@ -147,7 +150,7 @@ export default class Memory{
 		const editButton = document.createElement('Button');
 		const deleteButton = document.createElement('Button');
 		const sliderLabel = document.createElement('p');
-		const volumeSlider = document.createElement('Input');
+		this.volumeSlider = document.createElement('Input');
 
 		container.classList.add('memoryUnit'); 
 		container.classList.add('floatLeft');
@@ -167,12 +170,12 @@ export default class Memory{
 		deleteButton.innerHTML = "Clear &#128465";
 		deleteButton.addEventListener("click", this.deleteFile.bind(this));
 		sliderLabel.innerHTML = "Volume";
-		volumeSlider.setAttribute('type' , 'range');
-		volumeSlider.setAttribute('min' , '0');
-		volumeSlider.setAttribute('max' , '100');
-		volumeSlider.setAttribute('value' , '50');
-		volumeSlider.setAttribute('class', 'volumeSlider');
-		volumeSlider.addEventListener('input', function() {
+		this.volumeSlider.setAttribute('type' , 'range');
+		this.volumeSlider.setAttribute('min' , '0');
+		this.volumeSlider.setAttribute('max' , '100');
+		this.volumeSlider.setAttribute('value' , '50');
+		this.volumeSlider.setAttribute('class', 'volumeSlider');
+		this.volumeSlider.addEventListener('input', function() {
 			this.setVolumen(volumeSlider.value / 100);
 		}.bind(this));
 
@@ -182,7 +185,7 @@ export default class Memory{
 		container.appendChild(editButton);
 		container.appendChild(deleteButton);
 		container.appendChild(sliderLabel);
-		container.appendChild(volumeSlider);
+		container.appendChild(this.volumeSlider);
 		soundClips.appendChild(container);
 	}
 }
