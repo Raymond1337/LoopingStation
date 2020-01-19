@@ -27,7 +27,6 @@ export default class Memory{
 	}
 	
 	playSound(){
-		//console.log("play pressed");
 		setTimeout(function(){
 			if(this.audio == null){return;}
 			this.audio.play();
@@ -35,7 +34,6 @@ export default class Memory{
 	}
 	
 	stopSound(){
-		//console.log("stop pressed");
 		if(this.audio == null){return;}
 		this.audio.pause();
 		this.audio.currentTime = 0; // bc there is no stop function
@@ -111,7 +109,6 @@ export default class Memory{
 	
 	receiveAudio(_audio){
 		console.log("Audio received");
-		//console.log(_blob);
 		this.audio = _audio;
 
 		if(this.isClock){

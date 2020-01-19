@@ -20,8 +20,6 @@ export default class InputFilter{
 	
 	setFilter(_filter){
 		console.log("filter:");
-		//console.log(_filter);
-		//console.log(this.filterList);
 		console.log(this.filterList.filterInstances[_filter]);
 		
 		this.input.setFilter(this.filterList.filterInstances[_filter])
@@ -59,7 +57,6 @@ export default class InputFilter{
 		container.appendChild(filterComboBox);
 		soundClips.appendChild(container);
 		container.appendChild(sliderLabel);
-		//container.appendChild(lineBreak);
 		container.appendChild(volumeSlider);
 	}
 }
