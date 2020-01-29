@@ -173,7 +173,7 @@ export default class Memory{
 		this.volumeSlider.setAttribute('value' , '50');
 		this.volumeSlider.setAttribute('class', 'volumeSlider');
 		this.volumeSlider.addEventListener('input', function() {
-			this.setVolumen(volumeSlider.value / 100);
+			this.setVolumen(this.volumeSlider.value / 100);
 		}.bind(this));
 
 		container.appendChild(clipLabel);
